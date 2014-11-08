@@ -1,0 +1,34 @@
+{
+    "name": "nikapps/BazaarPush",
+    "description": "a robot based on Laravel framework for CafeBazaar developer panel which regularly pushes information about your apps on your mobile phone or other clients via PushBullet.",
+    "keywords": ["CafeBazaar", "PushBullet", "Laravel", "Push", "Notification", "Chrome", "iOS" ,"Android", "Firefox"],
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Hossein Moradgholi",
+            "email": "h.moradgholi@icloud.com"
+        },
+        {
+            "name": "Ali Borhani",
+            "email": "aliborhani1@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "ivkos/pushbullet": "dev-composer",
+        "miladr/jalali": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/models",
+            "src/commands"
+        ],
+        "psr-0": {
+            "Nikapps\\BazaarPush\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
