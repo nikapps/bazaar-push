@@ -30,5 +30,5 @@
             "Nikapps\\BazaarPush\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }
