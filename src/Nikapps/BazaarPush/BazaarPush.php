@@ -11,7 +11,7 @@
 namespace Nikapps\BazaarPush;
 
 use Illuminate\Support\Facades\Config;
-use Miladr\Jalali\jDateTime;
+use PHPushbullet\PHPushbullet;
 
 class BazaarPush {
 
@@ -97,7 +97,8 @@ class BazaarPush {
             $date = $rowMatches[3][0];
             $date = $this->endigit($date);
             list($year,$month,$day) = explode("/",$date);
-            list($gYear, $gMonth, $gDay) = jDateTime::toGregorian($year,$month,$day);
+
+            list($gYear, $gMonth, $gDay) = \jDateTime::toGregorian($year,$month,$day);
 
             $time = $rowMatches[4][0];
             $time = $this->endigit($time);
@@ -213,18 +214,20 @@ class BazaarPush {
 
         foreach ($pushKeys as $pushKey) {
             if($pushKey['accounts'] == null || in_array($account, $pushKey['accounts'])){
-                $pushBullet = new \Pushbullet($pushKey['key']);
+                $pushBullet = new PHPushbullet($pushKey['key']);
                 if($pushKey['devices'] == null){
                     // pushes to all of the devices
-                    $pushBullet->pushNote(null, $reportTitle, $reportBody);
+                    //$pushBullet->pushNote(null, $reportTitle, $reportBody);
+                    foreach($pushBullet->devices() as $device){
+                        $pushBullet->devices($device->iden)->note($reportTitle, $reportBody);
+                    }
                 }else{
                     // pushes to selected devices
                     foreach($pushKey['devices'] as $device){
-                        $pushBullet->pushNote($device, $reportTitle, $reportBody);
+                        $pushBullet->devices($device)->pushNote($device, $reportTitle, $reportBody);
                     }
                 }
             }
         }
     }
-
 } 

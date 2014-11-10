@@ -26,7 +26,7 @@ return [
         *
         * You can define the devices that you want to push on them, for example if you have 3 devices
         * in your PushBullet account and you just want push reports on just one or two of them you can pass
-        * their PushBullet identifires as an ARRAY in 'devices' key.
+        * their PushBullet identifire or nickname as an ARRAY in 'devices' key.
         * Again, you can pass 'null' to send the report on all of your devices.
         */
        [
