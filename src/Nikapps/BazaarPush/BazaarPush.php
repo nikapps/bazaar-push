@@ -1,9 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: hossein
- * Date: 11/8/14
- * Time: 6:58 PM
+ * a robot on CafeBazaar developer panel as a Laravel Frameword package which regularly pushes information
+ * about your apps on your mobile phone or other clients via PushBullet.
+ *
+ * @package     bazaar-push
+ * @author      Hossein Moradgholi <h.moradgholi@icloud.com>
+ * @license     MIT License
  */
 
 namespace Nikapps\BazaarPush;
