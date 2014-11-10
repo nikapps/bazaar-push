@@ -16,9 +16,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
-    },
-    "require-dev" :{
+        "illuminate/support": "4.2.*",
         "ivkos/pushbullet": "dev-composer",
         "miladr/jalali": "dev-master"
     },
@@ -31,6 +29,5 @@
         "psr-0": {
             "Nikapps\\BazaarPush\\": "src/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
