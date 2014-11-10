@@ -84,11 +84,11 @@ class BazaarPush {
 
         preg_match_all($this->patterns['paymentList'],$sales,$salesMatches);
 
-        // remove first row, kind a lazy :)
+        // removing the headers, kind a lazy :)
         unset($salesMatches[1][0]);
         $newSalePrice = 0;
-        $newSaleItem = 0;
-
+        $newSaleItems = [];
+        $totalNewItems = 0;
         foreach($salesMatches[1] as $row) {
             preg_match_all($this->patterns['paymentItem'],$row,$rowMatches);
 
@@ -111,9 +111,36 @@ class BazaarPush {
                 $bazaarSale->price = intval($this->endigit(str_replace("٬","",$rowMatches[5][0])));
                 $bazaarSale->token = $token;
                 $bazaarSale->save();
-                $newSaleItem++;
+
+                if(!isset($newSaleItems[$bazaarSale->package])){
+                    $newSaleItems[$bazaarSale->package] = 0;
+                }
+
+                $newSaleItems[$bazaarSale->package]++;
                 $newSalePrice += $bazaarSale->price;
+                $totalNewItems++;
             }
+        }
+
+        if($newSalePrice > 0){
+            $reportTemplates = $this->getReportTemplates();
+
+            $reportAdapter = [
+                "[[[--TOTAL-NEW-SALE--]]]" => number_format($newSalePrice),
+                "[[[--TOTAL-NEW-ITEMS--]]]" => number_format($totalNewItems),
+                "[[[--BAZAAR-ACCOUNT--]]]" => $email,
+                "[[[--ITEMS-REPORT--]]]" => print_r($newSaleItems,1)
+            ];
+
+            $reportTitle = $reportTemplates['newSaleReport']['title'];
+            $reportBody = $reportTemplates['newSaleReport']['body'];
+
+            foreach($reportAdapter as $key => $item){
+                $reportTitle = str_replace($key, $item, $reportTitle);
+                $reportBody = str_replace($key, $item, $reportBody);
+            }
+
+            $this->pushReport($reportTitle, $reportBody, $email);
         }
 
     }
@@ -149,12 +176,52 @@ class BazaarPush {
     }
 
     private function getBazaarCredentials(){
-        $credentials = Config::get("bazaarpush.credentials");
+        $credentials = Config::get("bazaar-push::credentials");
 
         if($credentials == null){
             throw new BazaarPushException("The credentials not found in your configuration");
         }else {
-            return$credentials;
+            return $credentials;
+        }
+    }
+
+    private function getPushBulletKeys(){
+        $pushBulletKeys = Config::get("bazaar-push::pushbulletKeys");
+
+        if($pushBulletKeys == null){
+            throw new BazaarPushException("The push bullet keys are missing from your configuration file");
+        }else{
+            return $pushBulletKeys;
+        }
+
+    }
+
+    private function getReportTemplates(){
+        $reportTemplates = Config::get("bazaar-push::reportTemplates");
+
+        if($reportTemplates == null){
+            throw new BazaarPushException("The report templates are missing from your configuration file");
+        }else {
+            return $reportTemplates;
+        }
+    }
+
+    public function pushReport($reportTitle, $reportBody, $account){
+        $pushKeys = $this->getPushBulletKeys();
+
+        foreach ($pushKeys as $pushKey) {
+            if($pushKey['accounts'] == null || in_array($account, $pushKey['accounts'])){
+                $pushBullet = new \Pushbullet($pushKey['key']);
+                if($pushKey['devices'] == null){
+                    // pushes to all of the devices
+                    $pushBullet->pushNote(null, $reportTitle, $reportBody);
+                }else{
+                    // pushes to selected devices
+                    foreach($pushKey['devices'] as $device){
+                        $pushBullet->pushNote($device, $reportTitle, $reportBody);
+                    }
+                }
+            }
         }
     }
 
