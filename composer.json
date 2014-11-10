@@ -1,5 +1,5 @@
 {
-    "name": "nikapps/BazaarPush",
+    "name": "nikapps/bazaar-push",
     "description": "a robot based on Laravel framework for CafeBazaar developer panel which regularly pushes information about your apps on your mobile phone or other clients via PushBullet.",
     "keywords": ["CafeBazaar", "PushBullet", "Laravel", "Push", "Notification", "Chrome", "iOS" ,"Android", "Firefox"],
     "license": "MIT",
