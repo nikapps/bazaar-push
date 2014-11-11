@@ -74,7 +74,7 @@ Setup your PushBullet accounts like the example, get your PushBullet API key fro
    ],
 ```
 ## Adding Cronjob
-This cronjob runs the checking command each 20 minutes and fetches the new sales from CafeBazaar, it will report it as a push to your devices if there is new sales.
+This cronjob runs the checking command each 20 minutes and fetches the new sales from CafeBazaar, it will report new events as a push to your devices.
 Don't forget to change the artisan path :)
 ```
 */20 * * * * php /absolute/path/to/your/artisan bazaarpush:sale >/dev/null 2>&1
