@@ -74,8 +74,50 @@ Setup your PushBullet accounts like the example, get your PushBullet API key fro
    ],
 ```
 ## Adding Cronjob
-This cronjob runs the checking command each 20 minutes and fetches the new sales from CafeBazaar, it will report new events as a push to your devices.
+This cronjob runs the checking command each 20 minutes and fetches the new sales from CafeBazaar. Also, it will report new events as a push to your devices.
 Don't forget to change the artisan path :)
 ```
 */20 * * * * php /absolute/path/to/your/artisan bazaarpush:sale >/dev/null 2>&1
 ```
+## Problems
+At this moment CafeBazaar just gives the latest 100 sale records, so if you have more than 100 sale records in 20 minutes (#RichKidsOfIran !), you'll lose some of the records.
+
+## Future
+Pushing the daily income and also new comments. 
+Wanna contribute ? simply fork this project and make a pull request !
+
+## Dependencies
+This project uses these projects : 
+
+1 - [PHPushbullet](https://github.com/joetannenbaum/phpushbullet)
+
+2 - [PHP calendar functions](https://github.com/fisharebest/ext-calendar)
+
+
+## License 
+This project released under the [MIT License](http://opensource.org/licenses/mit-license.php).
+```
+/*
+ * Copyright (C) 2014 NikApps Team.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * 1- The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * 2- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ */
+```
+## Donation
+[![Donate via Paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G3WRCRDXJD6A8)
