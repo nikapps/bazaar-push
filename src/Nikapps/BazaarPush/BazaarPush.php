@@ -263,7 +263,6 @@ class BazaarPush {
                 $pushBullet = new PHPushbullet($pushKey['key']);
                 if($pushKey['devices'] == null){
                     // pushes to all of the devices
-                    //$pushBullet->pushNote(null, $reportTitle, $reportBody);
                     foreach($pushBullet->devices() as $device){
                         $pushBullet->device($device->iden)->note($reportTitle, $reportBody);
                     }
