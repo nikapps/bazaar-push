@@ -17,7 +17,8 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*",
-        "joetannenbaum/phpushbullet": "~1.0"
+        "joetannenbaum/phpushbullet": "~1.0",
+        "fisharebest/ext-calendar": "1.*"
     },
     "autoload": {
         "classmap": [

@@ -1,15 +1,29 @@
 <?php
-/**
- * a robot on CafeBazaar developer panel as a Laravel Frameword package which regularly pushes information
- * about your apps on your mobile phone or other clients via PushBullet.
+/*
+ * Copyright (C) 2014 NikApps Team.
  *
- * @package     bazaar-push
- * @author      Hossein Moradgholi <h.moradgholi@icloud.com>
- * @license     MIT License
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * 1- The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * 2- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
  */
 
 namespace Nikapps\BazaarPush;
 
+use Fisharebest\ExtCalendar\PersianCalendar;
 use Illuminate\Support\Facades\Config;
 use PHPushbullet\PHPushbullet;
 
@@ -27,7 +41,13 @@ class BazaarPush {
         "paymentItem" => "/<td>(.*?)<\/td>.*?<code>(.*?)<\/code>.*?<td>(.*?)<\/td><td>(.*?)<\/td>.*?<span>(.*?)<\/span>.*?<code>(.*?)</is"
     ];
 
-    public function processAccount($email, $password){
+    /**
+     * This will process a single account and checks for new sales.
+     * @param $email
+     * @param $password
+     * @throws BazaarPushException
+     */
+    public function processAccountSale($email, $password){
 
         $ch = curl_init( $this->urls['loginPage'] );
 
@@ -98,7 +118,8 @@ class BazaarPush {
             $date = $this->endigit($date);
             list($year,$month,$day) = explode("/",$date);
 
-            list($gYear, $gMonth, $gDay) = \jDateTime::toGregorian($year,$month,$day);
+            $jalaliCalender = new PersianCalendar();
+            list($gYear, $gMonth, $gDay) = $jalaliCalender->ymdToJd($year,$month,$day);
 
             $time = $rowMatches[4][0];
             $time = $this->endigit($time);
@@ -149,6 +170,17 @@ class BazaarPush {
     }
 
     /**
+     * checks all of the accounts, their sale state and pushes a report for their new changes.
+     */
+    public function saleProcess(){
+        $credentials = $this->getBazaarCredentials();
+
+        foreach($credentials as $credential){
+            $this->processAccountSale($credential['email'], $credential['password']);
+        }
+    }
+
+    /**
      * This method will transform persian digits to english ones
      * @param  String $in_num
      * @return Integer
@@ -170,14 +202,11 @@ class BazaarPush {
 
     }
 
-    public function exec(){
-        $credentials = $this->getBazaarCredentials();
-
-        foreach($credentials as $credential){
-            $this->processAccount($credential['email'], $credential['password']);
-        }
-    }
-
+    /**
+     * returns an array of Bazaar credentials from configuration file.
+     * @return mixed
+     * @throws BazaarPushException
+     */
     private function getBazaarCredentials(){
         $credentials = Config::get("bazaar-push::credentials");
 
@@ -188,6 +217,11 @@ class BazaarPush {
         }
     }
 
+    /**
+     * returns an array of PushBullet keys from configuration file.
+     * @return mixed
+     * @throws BazaarPushException
+     */
     private function getPushBulletKeys(){
         $pushBulletKeys = Config::get("bazaar-push::pushbulletKeys");
 
@@ -199,6 +233,11 @@ class BazaarPush {
 
     }
 
+    /**
+     * returns an array of report templates from configuration file
+     * @return mixed
+     * @throws BazaarPushException
+     */
     private function getReportTemplates(){
         $reportTemplates = Config::get("bazaar-push::reportTemplates");
 
@@ -208,6 +247,13 @@ class BazaarPush {
             return $reportTemplates;
         }
     }
+
+    /**
+     * pushes a report from the given account to the devices
+     * @param $reportTitle
+     * @param $reportBody
+     * @param $account
+     */
 
     public function pushReport($reportTitle, $reportBody, $account){
         $pushKeys = $this->getPushBulletKeys();
