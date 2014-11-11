@@ -80,7 +80,8 @@ Don't forget to change the artisan path :)
 */20 * * * * php /absolute/path/to/your/artisan bazaarpush:sale >/dev/null 2>&1
 ```
 ## Problems
-At this moment CafeBazaar just gives the latest 100 sale records, so if you have more than 100 sale records in 20 minutes (#RichKidsOfIran !), you'll lose some of the records.
+- This project parses CafeBazaar pages and fetches required data from them, if CafeBazaar changes the current panel layout we need to change the matching Regular Expression patterns. Our recomendation is to set a watcher on this project to keep up with the updates.
+- At this moment CafeBazaar just gives the latest 100 sale records, so if you have more than 100 sale records in 20 minutes (#RichKidsOfIran !), you'll lose some of the records.
 
 ## Future
 Pushing the daily income and also new comments. 
@@ -88,11 +89,8 @@ Wanna contribute ? simply fork this project and make a pull request !
 
 ## Dependencies
 This project uses these projects : 
-
-1 - [PHPushbullet](https://github.com/joetannenbaum/phpushbullet)
-
-2 - [PHP calendar functions](https://github.com/fisharebest/ext-calendar)
-
+- [PHPushbullet](https://github.com/joetannenbaum/phpushbullet)
+- [PHP calendar functions](https://github.com/fisharebest/ext-calendar)
 
 ## License 
 This project released under the [MIT License](http://opensource.org/licenses/mit-license.php).
