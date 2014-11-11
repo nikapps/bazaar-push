@@ -81,7 +81,7 @@ Don't forget to change the artisan path :)
 ```
 */20 * * * * php /absolute/path/to/your/artisan bazaarpush:sale >/dev/null 2>&1
 ```
-## Problems
+## Probable issues
 - This project parses CafeBazaar pages and fetches required data from them, if CafeBazaar changes the current panel layout we need to change the matching Regular Expression patterns. Our recomendation is to set a watcher on this project to keep up with the updates.
 - At this moment CafeBazaar just gives the latest 100 sale records, so if you have more than 100 sale records in 20 minutes (#RichKidsOfIran !), you'll lose some of the records.
 
