@@ -265,12 +265,12 @@ class BazaarPush {
                     // pushes to all of the devices
                     //$pushBullet->pushNote(null, $reportTitle, $reportBody);
                     foreach($pushBullet->devices() as $device){
-                        $pushBullet->devices($device->iden)->note($reportTitle, $reportBody);
+                        $pushBullet->device($device->iden)->note($reportTitle, $reportBody);
                     }
                 }else{
                     // pushes to selected devices
                     foreach($pushKey['devices'] as $device){
-                        $pushBullet->devices($device)->note($device, $reportTitle, $reportBody);
+                        $pushBullet->device($device)->note($device, $reportTitle, $reportBody);
                     }
                 }
             }
