@@ -5,6 +5,8 @@ BazaarPush is a wrapper based on the popular Laravel Framework which regularly l
 
 ## Installation
 
+Would you rather a video (in Persian) instead ? [Aparat](http://www.aparat.com/v/Qv9Xr) 
+
 Using [composer](https://packagist.org/packages/nikapps/bazaar-push), add this package dependency to your Laravel's composer.json :
 
 ```
