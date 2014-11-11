@@ -3,8 +3,7 @@ a robot based on Laravel framework which regularly login into your CafeBazaar ac
 
 ## Installation
 
-Using [composer](https://packagist.org/packages/nikapps/bazaar-push):
-Add this package dependency to your Laravel's composer.json.
+Using [composer](https://packagist.org/packages/nikapps/bazaar-push), add this package dependency to your Laravel's composer.json :
 
 ```
 {
@@ -13,28 +12,63 @@ Add this package dependency to your Laravel's composer.json.
     }
 }
 ```
-Update composer
+Update composer :
 ```
 composer update
 ```
-Add this package provider in your providers array `[app/config/app.php]`
+Add this package provider in your providers array `[app/config/app.php]` : 
 ```
 'Nikapps\BazaarPush\BazaarPushServiceProvider'
 ```
-Run migrations for this package, this will add a table to your database named `bazaar_sale` which keeps track of your sale records.
+Run migrations for this package, this will add a table to your database named `bazaar_sale` which keeps track of your sale records :
 ```
 php artisan migrate --package="nikapps/bazaar-push"
 ```
-Publish configuration file into your app directory
+Publish configuration file into your app directory : 
 ```
 php artisan config:publish nikapps/bazaar-push
 ```
-Run 
+Run :
 ```
 php artisan
 ```
 if you see a `bazaarpush` command namespace, you are all set to go !
 
 ## Configuration
-This command will create a config file in `[app/config/packages/nikapps/bazaar-push]` directory which you have to declare your CafeBazaar credentials and also PushBullet keys and devices in it.
+
+Open `[app/config/packages/nikapps/bazaar-push/config.php]`.
+Setup your CafeBazaar credentials, each one of them as an associative array like the example below : 
+```php
+"credentials" => [
+       [
+           "email" => "first@account.com",
+           "password" => "secret"
+       ],
+       [
+           "email" => "second@account.com",
+           "password" => "top secret"
+       ], 
+       .
+       .
+       .
+   ]
+```
+Setup your PushBullet accounts like the example, get your PushBullet API key from [PushBullet](https://www.pushbullet.com/account)
+```php
+"pushbulletKeys" => [
+       [
+           "key" => "FirstAccountKey",
+           "accounts" => ['first@account.com'] // declare CafeBazaar accounts as an array which you want to get reports from them
+           "devices" => ['LGENexus 4'] // declare your devices as an array which you want to get pushes on them
+       ],
+       [
+           "key" => "SecondAccountKey",
+           "accounts" => null, // you can pass null to get reports from all of your declared CafeBazaar accounts in credentials section
+           "devices" => null // you can pass null to get pushes on all of the devices associated with this PushBullet account.
+       ],
+       .
+       .
+       .
+   ],
+```
 
