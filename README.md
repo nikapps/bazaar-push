@@ -20,11 +20,13 @@ Add this package provider in your providers array `[app/config/app.php]` :
 ```
 'Nikapps\BazaarPush\BazaarPushServiceProvider'
 ```
-Run migrations for this package, this will add a table to your database named `bazaar_sale` which keeps track of your sale records :
+Run migrations for this package, this will add a table to your database named `bazaar_sale` which keeps track of your sale records.
+Run :
 ```
 php artisan migrate --package="nikapps/bazaar-push"
 ```
-Publish configuration file into your app directory : 
+Publish configuration file.
+Run :
 ```
 php artisan config:publish nikapps/bazaar-push
 ```
@@ -71,4 +73,9 @@ Setup your PushBullet accounts like the example, get your PushBullet API key fro
        .
    ],
 ```
-
+## Adding Cronjob
+This cronjob runs the checking command each 20 minutes and fetches the new sales from CafeBazaar, it will report it as a push to your devices if there is new sales.
+Don't forget to change the artisan path :)
+```
+*/20 * * * * php /absolute/path/to/your/artisan bazaarpush:sale >/dev/null 2>&1
+```
