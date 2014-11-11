@@ -270,7 +270,7 @@ class BazaarPush {
                 }else{
                     // pushes to selected devices
                     foreach($pushKey['devices'] as $device){
-                        $pushBullet->device($device)->note($device, $reportTitle, $reportBody);
+                        $pushBullet->device($device)->note($reportTitle, $reportBody);
                     }
                 }
             }
