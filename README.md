@@ -90,7 +90,6 @@ Pushing the daily income and also new comments.
 Wanna contribute ? simply fork this project and make a pull request !
 
 ## Dependencies
-This project uses these projects : 
 - [PHPushbullet](https://github.com/joetannenbaum/phpushbullet)
 - [PHP calendar functions](https://github.com/fisharebest/ext-calendar)
 
