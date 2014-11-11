@@ -29,6 +29,12 @@ Publish configuration file into your app directory
 ```
 php artisan config:publish nikapps/bazaar-push
 ```
-This command will create a config file in `[app/config/packages/nikapps/bazaar-push]` directory which you have to declare your CafeBazaar credentials and also PushBullet keys and devices in it.
+Run 
+```
+php artisan
+```
+if you see a `bazaarpush` command namespace, you are all set to go !
 
+## Configuration
+This command will create a config file in `[app/config/packages/nikapps/bazaar-push]` directory which you have to declare your CafeBazaar credentials and also PushBullet keys and devices in it.
 
