@@ -1,5 +1,5 @@
 # BazaarPush
-a wrapper based on Laravel framework which regularly login into your CafeBazaar accounts, parses pages and pushes reports for new events like sales on your devices via PushBullet.
+BazaarPush is a wrapper based on the popular Laravel Framework which regularly logs into your CafeBazaar accounts, parses pages and pushes reports of new events such as sales on to your devices (via PushBullet). 
 
 ![BazaarPush](http://s22.postimg.org/e6xhwu93l/Bazaar_Push.jpg)
 
