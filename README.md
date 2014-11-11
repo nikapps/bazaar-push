@@ -1,5 +1,7 @@
 # BazaarPush
-a robot based on Laravel framework which regularly login into your CafeBazaar accounts, parses pages and pushes reports for new events like sales on your devices via PushBullet.
+a wrapper based on Laravel framework which regularly login into your CafeBazaar accounts, parses pages and pushes reports for new events like sales on your devices via PushBullet.
+
+![BazaarPush](http://s22.postimg.org/e6xhwu93l/Bazaar_Push.jpg)
 
 ## Installation
 
